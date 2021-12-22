@@ -1,7 +1,6 @@
 {
   "name": "goit-react-hw-05-movies",
   "version": "0.1.0",
-  "homepage": "https://alexilch.github.io/goit-react-hw-05-movies/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.1",
@@ -26,7 +25,7 @@
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "netlify deploy -p"
   },
   "eslintConfig": {
     "extends": [
