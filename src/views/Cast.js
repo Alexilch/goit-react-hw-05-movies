@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import * as moviesAPI from '../services/movie-api';
 import notfound from '../images/notfound.png';
+import s from './Cast.module.css';
 
 export default function Cast() {
   let { movieId } = useParams();
@@ -17,7 +18,7 @@ export default function Cast() {
   return (
     <>
       {cast && (
-        <ul>
+        <ul className={s.castlist}>
           {cast.map(cast => (
             <li key={cast.id}>
               <img

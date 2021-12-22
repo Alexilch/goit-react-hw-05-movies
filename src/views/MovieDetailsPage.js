@@ -1,7 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import {
   useParams,
-  useLocation,
+  useNavigate,
   NavLink,
   Outlet,
   Routes,
@@ -19,8 +19,9 @@ const Review = lazy(() =>
 );
 
 export default function MovieDetailsPage() {
-  let { pathname } = useLocation();
-  console.log(pathname);
+  // let location = useLocation();
+  // console.log(pathname);
+  let navigate = useNavigate();
   let { movieId } = useParams();
   //   console.log(movieId);
   const fallbackImage =
@@ -31,9 +32,12 @@ export default function MovieDetailsPage() {
     moviesAPI.fetchMovieById(movieId).then(setMovie);
   }, [movieId]);
 
+  const buttonHandler = () => {
+    navigate(-1);
+  };
+
   return (
     <>
-      <button type="button">Back</button>
       <div className={s.wrapper}>
         <img
           src={
@@ -58,11 +62,14 @@ export default function MovieDetailsPage() {
           )}
         </div>
       </div>
+      <button type="button" onClick={buttonHandler}>
+        Back
+      </button>
       <hr />
       <div className={s.additional_info}>
         Additional information
         <ul>
-          <li>
+          <li className={s.additionalinfo_item}>
             <NavLink
               to="cast"
               className={({ isActive }) => (isActive ? `${s.active}` : '')}
@@ -70,7 +77,7 @@ export default function MovieDetailsPage() {
               Cast
             </NavLink>
           </li>
-          <li>
+          <li className={s.additionalinfo_item}>
             <NavLink
               to="reviews"
               className={({ isActive }) => (isActive ? `${s.active}` : '')}

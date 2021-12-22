@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import * as moviesAPI from '../services/movie-api';
 import SearchForm from '../components/SearchForm/SearchForm';
 import { toast } from 'react-toastify';
 import MoviesList from '../components/MoviesList/MoviesList';
 import Loader from 'react-loader-spinner';
+
+import { createBrowserHistory } from 'history';
+let history = createBrowserHistory();
 
 const Status = {
   IDLE: 'idle',
@@ -15,23 +18,22 @@ const Status = {
 
 export default function MoviesPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [movies, setMovies] = useState([]);
   // const [error, setError] = useState(null);
+  const [movies, setMovies] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);
   const location = useLocation();
-  let navigate = useNavigate();
-
+  let { pathname } = useLocation();
+  //   let [urlSearchParams] = useSearchParams();
+  // console.log([urlSearchParams])
   const handleSearchbarSubmit = searchQuery => {
     setSearchQuery(searchQuery);
-    // console.log({location})
-    navigate({
+
+    history.push({
       pathname: `${location.pathname}`,
-      search: `${searchQuery}`,
+      search: `query=${searchQuery}`,
     });
   };
-  let { pathname } = useLocation();
-  // console.log(pathname)
-  const searchViaUrl = new URLSearchParams(location.search).get('search');
+  const searchViaUrl = new URLSearchParams(location.search).get('query');
 
   useEffect(() => {
     setSearchQuery(searchViaUrl);
