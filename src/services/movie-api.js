@@ -12,6 +12,12 @@ export function fetchTrandings() {
   return fetchMovies(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`);
 }
 
+export function fetchMovieByQuery(query) {
+  return fetchMovies(
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`,
+  );
+}
+
 export function fetchMovieById(movieId) {
   return fetchMovies(
     `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`,
