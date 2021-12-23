@@ -1,7 +1,9 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import {
   useParams,
+  useLocation,
   useNavigate,
+  // useHistory,
   NavLink,
   Outlet,
   Routes,
@@ -10,6 +12,7 @@ import {
 import * as moviesAPI from '../services/movie-api';
 import s from './MovieDetailsPage.module.css';
 import Loader from '../components/Loader/Loader';
+// import { createBrowserHistory } from 'history';
 
 const Cast = lazy(() =>
   import('./Cast.js' /* webpackChunkName: "cast-page" */),
@@ -19,21 +22,28 @@ const Review = lazy(() =>
 );
 
 export default function MovieDetailsPage() {
-  // let location = useLocation();
-  // console.log(pathname);
+  const [movie, setMovie] = useState([]);
+  const location = useLocation();
+  // console.log(location);
   let navigate = useNavigate();
   let { movieId } = useParams();
   //   console.log(movieId);
   const fallbackImage =
     'https://media.istockphoto.com/photos/single-dia-slide-35mm-film-snip-under-different-flash-light-settings-picture-id1323720288?b=1&k=20&m=1323720288&s=170667a&w=0&h=XCA6bix_4uuiWXqDj1_hsYMhAz_loXVFQ9jYx-F47qE=';
-  const [movie, setMovie] = useState([]);
 
   useEffect(() => {
     moviesAPI.fetchMovieById(movieId).then(setMovie);
   }, [movieId]);
 
   const buttonHandler = () => {
-    navigate(-1);
+    if (
+      location.pathname.includes('cast') ??
+      location.pathname.includes('reviews')
+    ) {
+      navigate(-2);
+    } else if (location.pathname.includes('movie')) {
+      navigate(-1);
+    }
   };
 
   return (
@@ -72,6 +82,7 @@ export default function MovieDetailsPage() {
           <li className={s.additionalinfo_item}>
             <NavLink
               to="cast"
+              // state={{from: location }}
               className={({ isActive }) => (isActive ? `${s.active}` : '')}
             >
               Cast
@@ -80,6 +91,7 @@ export default function MovieDetailsPage() {
           <li className={s.additionalinfo_item}>
             <NavLink
               to="reviews"
+              // state={{from: location }}
               className={({ isActive }) => (isActive ? `${s.active}` : '')}
             >
               Review

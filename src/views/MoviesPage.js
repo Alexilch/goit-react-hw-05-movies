@@ -4,10 +4,8 @@ import * as moviesAPI from '../services/movie-api';
 import SearchForm from '../components/SearchForm/SearchForm';
 import { toast } from 'react-toastify';
 import MoviesList from '../components/MoviesList/MoviesList';
-import Loader from 'react-loader-spinner';
-
+import Loader from '../components/Loader/Loader';
 import { createBrowserHistory } from 'history';
-let history = createBrowserHistory();
 
 const Status = {
   IDLE: 'idle',
@@ -23,16 +21,16 @@ export default function MoviesPage() {
   const [status, setStatus] = useState(Status.IDLE);
   const location = useLocation();
   let { pathname } = useLocation();
-  //   let [urlSearchParams] = useSearchParams();
-  // console.log([urlSearchParams])
+  let history = createBrowserHistory();
+
   const handleSearchbarSubmit = searchQuery => {
     setSearchQuery(searchQuery);
-
     history.push({
       pathname: `${location.pathname}`,
       search: `query=${searchQuery}`,
     });
   };
+
   const searchViaUrl = new URLSearchParams(location.search).get('query');
 
   useEffect(() => {
@@ -47,7 +45,6 @@ export default function MoviesPage() {
     moviesAPI
       .fetchMovieByQuery(searchQuery)
       .then(responce => {
-        // console.log(responce.results.length)
         if (responce.results.length === 0) {
           setStatus(Status.REJECTED);
           return;
