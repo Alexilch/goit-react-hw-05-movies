@@ -27,6 +27,7 @@ export default function MovieDetailsPage() {
   // console.log(location);
   let navigate = useNavigate();
   let { movieId } = useParams();
+  // let history = createBrowserHistory();
   //   console.log(movieId);
   const fallbackImage =
     'https://media.istockphoto.com/photos/single-dia-slide-35mm-film-snip-under-different-flash-light-settings-picture-id1323720288?b=1&k=20&m=1323720288&s=170667a&w=0&h=XCA6bix_4uuiWXqDj1_hsYMhAz_loXVFQ9jYx-F47qE=';
@@ -40,7 +41,7 @@ export default function MovieDetailsPage() {
       location.pathname.includes('cast') ??
       location.pathname.includes('reviews')
     ) {
-      navigate(-2);
+      navigate('/');
     } else if (location.pathname.includes('movie')) {
       navigate(-1);
     }
@@ -83,6 +84,7 @@ export default function MovieDetailsPage() {
             <NavLink
               to="cast"
               // state={{from: location }}
+              // state= {{ from: location.state ? location.state.from : '/' }}
               className={({ isActive }) => (isActive ? `${s.active}` : '')}
             >
               Cast
@@ -92,6 +94,7 @@ export default function MovieDetailsPage() {
             <NavLink
               to="reviews"
               // state={{from: location }}
+              // state= {{ from: location.state ? location.state.from : '/' }}
               className={({ isActive }) => (isActive ? `${s.active}` : '')}
             >
               Review
