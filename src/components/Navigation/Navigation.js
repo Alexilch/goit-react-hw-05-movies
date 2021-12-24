@@ -9,7 +9,7 @@ const Navigation = () => (
       to="/"
       className={styles.link}
       style={({ isActive }) => ({
-        color: isActive ? 'red' : '',
+        color: isActive ? '#ff5100' : '',
       })}
     >
       HomePage
@@ -18,7 +18,7 @@ const Navigation = () => (
       to="/movies"
       className={styles.link}
       style={({ isActive }) => ({
-        color: isActive ? 'red' : '',
+        color: isActive ? '#ff5100' : '',
       })}
     >
       Movies

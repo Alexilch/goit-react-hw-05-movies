@@ -29,8 +29,9 @@ export default function MoviesPage() {
       pathname: `${location.pathname}`,
       search: `query=${searchQuery}`,
     });
+    location.search = `?query=${searchQuery}`;
   };
-
+  // console.log(location)
   const searchViaUrl = new URLSearchParams(location.search).get('query');
 
   useEffect(() => {

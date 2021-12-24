@@ -37,16 +37,26 @@ export default function MovieDetailsPage() {
   }, [movieId]);
 
   const buttonHandler = () => {
-    if (
-      location.pathname.includes('cast') ??
-      location.pathname.includes('reviews')
-    ) {
-      navigate('/');
-    } else if (location.pathname.includes('movie')) {
+    //   location.pathname.includes('cast') ??
+    //   location.pathname.includes('reviews')
+    // ) {
+    //   navigate(-2);
+    // } else if (location.pathname.includes('movie')) {
+    //   navigate(-1);
+    // }
+    const fromHomePage = location.state?.from?.pathname ?? '/';
+    const fromMoviesPage = location.state?.from?.search;
+
+    if (fromHomePage) {
+      navigate(fromHomePage, { replace: true });
+      // console.log('возврат в ветку HomePage')
+    }
+    if (fromMoviesPage) {
       navigate(-1);
+      // console.log('возврат в ветку MoviesPage')
     }
   };
-
+  // console.log(location)
   return (
     <>
       <div className={s.wrapper}>
@@ -84,7 +94,7 @@ export default function MovieDetailsPage() {
             <NavLink
               to="cast"
               // state={{from: location }}
-              // state= {{ from: location.state ? location.state.from : '/' }}
+              state={{ from: location.state.from }}
               className={({ isActive }) => (isActive ? `${s.active}` : '')}
             >
               Cast
@@ -94,6 +104,7 @@ export default function MovieDetailsPage() {
             <NavLink
               to="reviews"
               // state={{from: location }}
+              state={{ from: location.state.from }}
               // state= {{ from: location.state ? location.state.from : '/' }}
               className={({ isActive }) => (isActive ? `${s.active}` : '')}
             >
