@@ -5,8 +5,7 @@ import notfound from '../images/notfound.png';
 import s from './Cast.module.css';
 
 export default function Cast() {
-  let { movieId } = useParams();
-  // console.log(movieId);
+  const { movieId } = useParams();
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
@@ -14,7 +13,7 @@ export default function Cast() {
       setCast([...responce.cast]);
     });
   }, [movieId]);
-  // console.log(cast)
+
   return (
     <>
       {cast && (

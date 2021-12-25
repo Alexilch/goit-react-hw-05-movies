@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import * as moviesAPI from '../services/movie-api';
-// import notfound from '../images/notfound.png';
 
 export default function Review() {
-  let { movieId } = useParams();
-  // console.log(movieId);
+  const { movieId } = useParams();
   const [review, setReview] = useState([]);
 
   useEffect(() => {
@@ -13,7 +11,7 @@ export default function Review() {
       setReview([...responce.results]);
     });
   }, [movieId]);
-  // console.log(review)
+
   if (review.length === 0) {
     return (
       <>

@@ -3,7 +3,6 @@ import {
   useParams,
   useLocation,
   useNavigate,
-  // useHistory,
   NavLink,
   Outlet,
   Routes,
@@ -12,7 +11,6 @@ import {
 import * as moviesAPI from '../services/movie-api';
 import s from './MovieDetailsPage.module.css';
 import Loader from '../components/Loader/Loader';
-// import { createBrowserHistory } from 'history';
 
 const Cast = lazy(() =>
   import('./Cast.js' /* webpackChunkName: "cast-page" */),
@@ -24,11 +22,9 @@ const Review = lazy(() =>
 export default function MovieDetailsPage() {
   const [movie, setMovie] = useState([]);
   const location = useLocation();
-  // console.log(location);
-  let navigate = useNavigate();
-  let { movieId } = useParams();
-  // let history = createBrowserHistory();
-  //   console.log(movieId);
+  const navigate = useNavigate();
+  const { movieId } = useParams();
+
   const fallbackImage =
     'https://media.istockphoto.com/photos/single-dia-slide-35mm-film-snip-under-different-flash-light-settings-picture-id1323720288?b=1&k=20&m=1323720288&s=170667a&w=0&h=XCA6bix_4uuiWXqDj1_hsYMhAz_loXVFQ9jYx-F47qE=';
 
@@ -37,26 +33,14 @@ export default function MovieDetailsPage() {
   }, [movieId]);
 
   const buttonHandler = () => {
-    //   location.pathname.includes('cast') ??
-    //   location.pathname.includes('reviews')
-    // ) {
-    //   navigate(-2);
-    // } else if (location.pathname.includes('movie')) {
-    //   navigate(-1);
-    // }
-    const fromHomePage = location.state?.from?.pathname ?? '/';
-    const fromMoviesPage = location.state?.from?.search;
+    const { pathname, search } = location?.state?.from;
 
-    if (fromHomePage) {
-      navigate(fromHomePage, { replace: true });
-      // console.log('возврат в ветку HomePage')
-    }
-    if (fromMoviesPage) {
-      navigate(-1);
-      // console.log('возврат в ветку MoviesPage')
-    }
+    const goBackPathname =
+      pathname === '/movies' ? `${pathname}${search}` : pathname;
+
+    navigate(goBackPathname, { replace: true });
   };
-  // console.log(location)
+
   return (
     <>
       <div className={s.wrapper}>
@@ -93,7 +77,6 @@ export default function MovieDetailsPage() {
           <li className={s.additionalinfo_item}>
             <NavLink
               to="cast"
-              // state={{from: location }}
               state={{ from: location.state.from }}
               className={({ isActive }) => (isActive ? `${s.active}` : '')}
             >
@@ -103,9 +86,7 @@ export default function MovieDetailsPage() {
           <li className={s.additionalinfo_item}>
             <NavLink
               to="reviews"
-              // state={{from: location }}
               state={{ from: location.state.from }}
-              // state= {{ from: location.state ? location.state.from : '/' }}
               className={({ isActive }) => (isActive ? `${s.active}` : '')}
             >
               Review

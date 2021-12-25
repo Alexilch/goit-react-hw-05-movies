@@ -16,7 +16,6 @@ const Status = {
 
 export default function MoviesPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  // const [error, setError] = useState(null);
   const [movies, setMovies] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);
   const location = useLocation();
@@ -31,7 +30,7 @@ export default function MoviesPage() {
     });
     location.search = `?query=${searchQuery}`;
   };
-  // console.log(location)
+
   const searchViaUrl = new URLSearchParams(location.search).get('query');
 
   useEffect(() => {
@@ -54,7 +53,6 @@ export default function MoviesPage() {
         setStatus(Status.RESOLVED);
       })
       .catch(error => {
-        // setError(error);
         setStatus(Status.REJECTED);
       });
   }, [searchQuery]);
