@@ -22,7 +22,7 @@ export default function MoviesPage() {
   let { pathname } = useLocation();
   let history = createBrowserHistory();
 
-  const handleSearchbarSubmit = searchQuery => {
+  const handleSubmit = searchQuery => {
     setSearchQuery(searchQuery);
     history.push({
       pathname: `${location.pathname}`,
@@ -58,7 +58,7 @@ export default function MoviesPage() {
   }, [searchQuery]);
 
   if (status === Status.IDLE) {
-    return <SearchForm onSubmit={handleSearchbarSubmit} />;
+    return <SearchForm onSubmit={handleSubmit} />;
   }
   if (status === Status.PENDING) {
     return <Loader />;
@@ -76,7 +76,7 @@ export default function MoviesPage() {
       }),
       (
         <>
-          <SearchForm onSubmit={handleSearchbarSubmit} />
+          <SearchForm onSubmit={handleSubmit} />
         </>
       )
     );
@@ -84,7 +84,7 @@ export default function MoviesPage() {
   if (status === Status.RESOLVED) {
     return (
       <>
-        <SearchForm onSubmit={handleSearchbarSubmit} />
+        <SearchForm onSubmit={handleSubmit} />
         <MoviesList movies={movies} pathname={pathname}></MoviesList>
       </>
     );

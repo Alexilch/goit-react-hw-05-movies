@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import * as moviesAPI from '../services/movie-api';
 import notfound from '../images/notfound.png';
 import s from './Cast.module.css';
 
-export default function Cast() {
-  const { movieId } = useParams();
+export default function Cast({ movieId }) {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {

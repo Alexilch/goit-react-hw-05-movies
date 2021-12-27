@@ -4,7 +4,6 @@ import {
   useLocation,
   useNavigate,
   NavLink,
-  Outlet,
   Routes,
   Route,
 } from 'react-router-dom';
@@ -23,7 +22,9 @@ export default function MovieDetailsPage() {
   const [movie, setMovie] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
-  const { movieId } = useParams();
+
+  const { slug } = useParams();
+  const movieId = slug.match(/[0-9]+$/)[0];
 
   const fallbackImage =
     'https://media.istockphoto.com/photos/single-dia-slide-35mm-film-snip-under-different-flash-light-settings-picture-id1323720288?b=1&k=20&m=1323720288&s=170667a&w=0&h=XCA6bix_4uuiWXqDj1_hsYMhAz_loXVFQ9jYx-F47qE=';
@@ -92,13 +93,12 @@ export default function MovieDetailsPage() {
               Review
             </NavLink>
           </li>
-          <Outlet />
         </ul>
       </div>
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="cast" element={<Cast />} />
-          <Route path="reviews" element={<Review />} />
+          <Route path="cast" element={<Cast movieId={movieId} />} />
+          <Route path="reviews" element={<Review movieId={movieId} />} />
         </Routes>
       </Suspense>
     </>

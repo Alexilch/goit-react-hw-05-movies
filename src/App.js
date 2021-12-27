@@ -28,7 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies/*" element={<MoviesPage />} />
-          <Route path="/movies/:movieId/*" element={<MovieDetailsPage />} />
+          <Route path="/movies/:slug/*" element={<MovieDetailsPage />} />
         </Routes>
       </Suspense>
       <ToastContainer transition={Slide} />
