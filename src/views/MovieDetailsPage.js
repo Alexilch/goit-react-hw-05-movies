@@ -24,7 +24,7 @@ export default function MovieDetailsPage() {
   const navigate = useNavigate();
 
   const { slug } = useParams();
-  const movieId = slug.match(/[0-9]+$/)[0];
+  const movieId = slug.match(/[0-9]{1,6}$/)[0];
 
   const fallbackImage =
     'https://media.istockphoto.com/photos/single-dia-slide-35mm-film-snip-under-different-flash-light-settings-picture-id1323720288?b=1&k=20&m=1323720288&s=170667a&w=0&h=XCA6bix_4uuiWXqDj1_hsYMhAz_loXVFQ9jYx-F47qE=';
